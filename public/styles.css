@@ -203,8 +203,8 @@ body {
     font-family: var(--font-secondary);
     text-decoration: none;
     color: var(--color-ink);
-    font-weight: 600;
-    font-style: italic;
+    font-weight: 400;
+    font-style: normal;
     position: relative;
     transition: var(--transition-smooth);
     padding: var(--space-xs) 0;
@@ -394,7 +394,7 @@ body {
     justify-content: center;
 }
 
-.revolving-icons {
+.static-icons {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -404,45 +404,66 @@ body {
     pointer-events: none;
 }
 
-.revolving-icon {
+.static-icon {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    top: 50%;
-    left: 50%;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    animation: revolve 25s linear infinite;
-    transform-origin: 0 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0,0,0,0.1),
+        0 4px 16px rgba(0,0,0,0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: var(--transition-elegant);
+    z-index: 10;
+}
+
+.static-icon:hover {
+    transform: scale(1.15) translateY(-2px);
+    box-shadow: 
+        0 16px 48px rgba(0,0,0,0.15),
+        0 8px 24px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .chess-icon {
-    color: var(--color-gold);
-    animation-delay: 0s;
-    transform: translate(-25px, -25px) rotate(0deg) translateX(180px) rotate(0deg);
+    color: var(--color-primary);
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-shadow: 0 2px 8px rgba(26, 26, 46, 0.4);
+    font-weight: 900;
+}
+
+.chess-icon:hover {
+    transform: translateX(-50%) scale(1.15) translateY(-2px);
 }
 
 .volleyball-icon {
     color: var(--color-accent);
-    animation-delay: -8.33s;
-    transform: translate(-25px, -25px) rotate(120deg) translateX(180px) rotate(-120deg);
+    bottom: 20px;
+    left: -20px;
+    text-shadow: 0 2px 8px rgba(233, 69, 96, 0.3);
+    filter: contrast(1.2) saturate(1.1) brightness(1.1);
 }
 
 .book-icon {
     color: var(--color-primary);
-    animation-delay: -16.67s;
-    transform: translate(-25px, -25px) rotate(240deg) translateX(180px) rotate(-240deg);
+    bottom: 20px;
+    right: -20px;
+    text-shadow: 0 2px 8px rgba(26, 26, 46, 0.3);
+    filter: sepia(0.3) saturate(1.2) brightness(0.9);
 }
 
 .hero-image {
-    width: 300px;
-    height: 300px;
+    width: 375px;
+    height: 375px;
     position: relative;
     z-index: 1;
 }
@@ -451,7 +472,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent), var(--color-gold));
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
     padding: 4px;
     animation: imageGlow 4s ease-in-out infinite;
 }
@@ -464,10 +485,44 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+}
+
+.portrait-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.name-first,
+.name-last {
     font-family: var(--font-primary);
-    font-size: 3rem;
     font-weight: 600;
+    font-style: italic;
+    display: block;
+    line-height: 1;
+    background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 50%, #e8e8e8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.name-first {
+    font-size: 2.6rem;
+    margin-bottom: -0.1em;
+    letter-spacing: 0.02em;
+}
+
+.name-last {
+    font-size: 2.4rem;
+    letter-spacing: 0.05em;
+    opacity: 0.95;
 }
 
 .scroll-indicator {
@@ -1228,23 +1283,18 @@ section {
     }
 }
 
-@keyframes revolve {
-    0% {
-        transform: translate(-25px, -25px) rotate(0deg) translateX(180px) rotate(0deg);
-    }
-    100% {
-        transform: translate(-25px, -25px) rotate(360deg) translateX(180px) rotate(-360deg);
-    }
-}
+
 
 @keyframes imageGlow {
     0%, 100% {
         box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
     }
     50% {
-        box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+        box-shadow: 0 0 40px rgba(233, 69, 96, 0.5);
     }
 }
+
+
 
 @keyframes scrollBounce {
     0%, 100% {
@@ -1294,8 +1344,16 @@ section {
     }
     
     .hero-image {
-        width: 250px;
-        height: 250px;
+        width: 300px;
+        height: 300px;
+    }
+    
+    .name-first {
+        font-size: 2.2rem;
+    }
+    
+    .name-last {
+        font-size: 2rem;
     }
     
     .about-content {
@@ -1338,14 +1396,24 @@ section {
         text-align: center;
     }
     
-    .revolving-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.4rem;
+    .static-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.8rem;
     }
     
-    .revolving-icon {
-        animation: revolve 15s linear infinite;
+    .chess-icon {
+        top: -25px;
+    }
+    
+    .volleyball-icon {
+        bottom: 15px;
+        left: -15px;
+    }
+    
+    .book-icon {
+        bottom: 15px;
+        right: -15px;
     }
     
     .education-grid {

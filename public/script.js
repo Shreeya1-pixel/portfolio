@@ -59,16 +59,25 @@ class PortfolioAnimations {
 
     // Hero Elements Animation
     animateHeroElements() {
-        const revolvingIcons = document.querySelectorAll('.revolving-icon');
+        const staticIcons = document.querySelectorAll('.static-icon');
+        const nameElements = document.querySelectorAll('.name-first, .name-last');
         
-        revolvingIcons.forEach((icon, index) => {
+        // Animate name elements
+        nameElements.forEach((element, index) => {
+            setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 300);
+        });
+        
+        // Animate icons
+        staticIcons.forEach((icon, index) => {
             setTimeout(() => {
                 icon.style.opacity = '1';
-                icon.style.animation = `revolve 25s linear infinite`;
-                // Set proper delays for 120-degree spacing
-                const delays = [0, -8.33, -16.67];
-                icon.style.animationDelay = `${delays[index]}s`;
-            }, index * 300);
+                icon.style.transform = icon.classList.contains('chess-icon') 
+                    ? 'translateX(-50%) scale(1)' 
+                    : 'scale(1)';
+            }, 800 + (index * 200));
         });
     }
 
@@ -137,15 +146,15 @@ class PortfolioAnimations {
 
     // Parallax Effects
     setupParallaxEffects() {
-        const revolvingIcons = document.querySelectorAll('.revolving-icon');
+        const staticIcons = document.querySelectorAll('.static-icon');
         
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             
-            revolvingIcons.forEach((icon, index) => {
-                const baseDelay = index * -6.67;
-                const scrollSpeed = scrolled * 0.01;
-                icon.style.animationDelay = `${baseDelay + scrollSpeed}s`;
+            staticIcons.forEach((icon, index) => {
+                const parallaxSpeed = 0.1 + (index * 0.05);
+                const translateY = scrolled * parallaxSpeed;
+                icon.style.transform = `translateY(${translateY}px)`;
             });
         });
     }
@@ -465,12 +474,22 @@ window.addEventListener('load', () => {
         item.classList.add('fade-in-up');
     });
     
-    // Initialize revolving icons
-    const revolvingIcons = document.querySelectorAll('.revolving-icon');
-    revolvingIcons.forEach((icon, index) => {
-        icon.style.opacity = '0.8';
-        const delays = [0, -8.33, -16.67];
-        icon.style.animationDelay = `${delays[index]}s`;
+    // Initialize static icons and name elements
+    const staticIcons = document.querySelectorAll('.static-icon');
+    const nameElements = document.querySelectorAll('.name-first, .name-last');
+    
+    staticIcons.forEach((icon, index) => {
+        icon.style.opacity = '0';
+        icon.style.transform = icon.classList.contains('chess-icon') 
+            ? 'translateX(-50%) scale(0.8)' 
+            : 'scale(0.8)';
+        icon.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    });
+    
+    nameElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     });
 });
 
