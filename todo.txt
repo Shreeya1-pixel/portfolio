@@ -1,0 +1,1 @@
+3. the book image animation is not that good, and for the second book, we even found an image for the back of the book: "Blue Whispers Back.jpeg" and then the person can have the 3d view there, we can rotate the floating book with the mouse (only along horizontal axis) and for the first book, use a blank dark blue back page. 

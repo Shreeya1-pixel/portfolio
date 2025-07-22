@@ -20,50 +20,26 @@ class PortfolioAnimations {
     // Custom Cursor
     setupCustomCursor() {
         const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
         
-        if (!cursor || !cursorFollower) return;
-
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+        if (!cursor) return;
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
 
-        // Smooth follower animation
-        const animateFollower = () => {
-            const dx = mouseX - followerX;
-            const dy = mouseY - followerY;
-            
-            followerX += dx * 0.1;
-            followerY += dy * 0.1;
-            
-            cursorFollower.style.left = followerX + 'px';
-            cursorFollower.style.top = followerY + 'px';
-            
-            requestAnimationFrame(animateFollower);
-        };
-        animateFollower();
-
         // Cursor interactions
-        const interactiveElements = document.querySelectorAll('a, button, .work-item, .service-item, .nav-link');
+        const interactiveElements = document.querySelectorAll('a, button, .portfolio-item, .published-item, .education-card, .service-item, .nav-link');
         
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
-                cursorFollower.style.transform = 'scale(1.5)';
-                cursorFollower.style.opacity = '0.8';
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.color = 'var(--color-gold)';
             });
             
             el.addEventListener('mouseleave', () => {
                 cursor.style.transform = 'scale(1)';
-                cursorFollower.style.transform = 'scale(1)';
-                cursorFollower.style.opacity = '0.5';
+                cursor.style.color = 'var(--color-accent)';
             });
         });
     }
@@ -83,13 +59,16 @@ class PortfolioAnimations {
 
     // Hero Elements Animation
     animateHeroElements() {
-        const floatingElements = document.querySelectorAll('.floating-elements > *');
+        const revolvingIcons = document.querySelectorAll('.revolving-icon');
         
-        floatingElements.forEach((element, index) => {
+        revolvingIcons.forEach((icon, index) => {
             setTimeout(() => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }, index * 200);
+                icon.style.opacity = '1';
+                icon.style.animation = `revolve 25s linear infinite`;
+                // Set proper delays for 120-degree spacing
+                const delays = [0, -8.33, -16.67];
+                icon.style.animationDelay = `${delays[index]}s`;
+            }, index * 300);
         });
     }
 
@@ -158,15 +137,15 @@ class PortfolioAnimations {
 
     // Parallax Effects
     setupParallaxEffects() {
-        const parallaxElements = document.querySelectorAll('.floating-elements > *');
+        const revolvingIcons = document.querySelectorAll('.revolving-icon');
         
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
             
-            parallaxElements.forEach((element, index) => {
-                const speed = 0.2 + (index * 0.1);
-                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.01}deg)`;
+            revolvingIcons.forEach((icon, index) => {
+                const baseDelay = index * -6.67;
+                const scrollSpeed = scrolled * 0.01;
+                icon.style.animationDelay = `${baseDelay + scrollSpeed}s`;
             });
         });
     }
@@ -273,7 +252,7 @@ class PortfolioAnimations {
         }, observerOptions);
 
         // Observe elements for animation
-        const animateElements = document.querySelectorAll('.work-item, .service-item, .timeline-item, .stat-item, .recognition-item');
+        const animateElements = document.querySelectorAll('.portfolio-item, .published-item, .education-card, .service-item, .timeline-item, .stat-item, .recognition-item');
         animateElements.forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
@@ -316,15 +295,32 @@ class PortfolioAnimations {
 
     // Hover Effects
     setupHoverEffects() {
-        // Work items hover effect
-        const workItems = document.querySelectorAll('.work-item');
-        workItems.forEach(item => {
+        // Portfolio items hover effect
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        portfolioItems.forEach(item => {
             item.addEventListener('mouseenter', () => {
-                item.style.transform = 'translateY(-10px) scale(1.02)';
+                item.style.transform = 'translateY(-8px) scale(1.02)';
             });
             
             item.addEventListener('mouseleave', () => {
                 item.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Published items book effect
+        const publishedItems = document.querySelectorAll('.published-item');
+        publishedItems.forEach(item => {
+            const bookCover = item.querySelector('.book-cover');
+            item.addEventListener('mouseenter', () => {
+                if (bookCover) {
+                    bookCover.style.transform = 'rotateY(-25deg) rotateX(5deg)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                if (bookCover) {
+                    bookCover.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                }
             });
         });
 
@@ -463,17 +459,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // Additional smooth interactions
 window.addEventListener('load', () => {
     // Add stagger animation to grid items
-    const gridItems = document.querySelectorAll('.works-grid .work-item, .services-grid .service-item');
+    const gridItems = document.querySelectorAll('.portfolio-grid .portfolio-item, .published-grid .published-item, .education-grid .education-card, .services-grid .service-item');
     gridItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
         item.classList.add('fade-in-up');
     });
     
-    // Add floating animation to hero elements
-    const floatingElements = document.querySelectorAll('.floating-elements > *');
-    floatingElements.forEach((element, index) => {
-        element.style.animationDelay = `${index * 0.5}s`;
-        element.style.animationDuration = `${4 + index}s`;
+    // Initialize revolving icons
+    const revolvingIcons = document.querySelectorAll('.revolving-icon');
+    revolvingIcons.forEach((icon, index) => {
+        icon.style.opacity = '0.8';
+        const delays = [0, -8.33, -16.67];
+        icon.style.animationDelay = `${delays[index]}s`;
     });
 });
 
