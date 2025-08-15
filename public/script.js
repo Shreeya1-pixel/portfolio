@@ -29,7 +29,7 @@ class PortfolioAnimations {
         });
 
         // Cursor interactions
-        const interactiveElements = document.querySelectorAll('a, button, .portfolio-item, .published-item, .education-card, .service-item, .nav-link');
+        const interactiveElements = document.querySelectorAll('a, button, .portfolio-item, .published-item, .education-card, .service-item, .nav-link, .skill-category, .project-item, .experience-item, .achievement-item, .certification-item');
         
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
@@ -261,7 +261,7 @@ class PortfolioAnimations {
         }, observerOptions);
 
         // Observe elements for animation
-        const animateElements = document.querySelectorAll('.portfolio-item, .published-item, .education-card, .service-item, .timeline-item, .stat-item, .recognition-item');
+        const animateElements = document.querySelectorAll('.portfolio-item, .published-item, .education-card, .service-item, .timeline-item, .stat-item, .recognition-item, .skill-category, .project-item, .experience-item, .achievement-item, .certification-item');
         animateElements.forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Additional smooth interactions
 window.addEventListener('load', () => {
     // Add stagger animation to grid items
-    const gridItems = document.querySelectorAll('.portfolio-grid .portfolio-item, .published-grid .published-item, .education-grid .education-card, .services-grid .service-item');
+    const gridItems = document.querySelectorAll('.portfolio-grid .portfolio-item, .published-grid .published-item, .education-grid .education-card, .services-grid .service-item, .skills-grid .skill-category, .projects-grid .project-item, .leadership-grid .leadership-category');
     gridItems.forEach((item, index) => {
         item.style.animationDelay = `${index * 0.1}s`;
         item.classList.add('fade-in-up');
