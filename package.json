@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "webpack --mode=production",
-    "watch": "webpack --mode=development --watch"
+    "build": "echo 'Static site - no build required'",
+    "vercel-build": "echo 'Static site - no build required'"
   },
   "keywords": ["portfolio", "literature", "author", "poetry", "node.js"],
   "author": "Shreeya Gupta",
@@ -19,11 +19,6 @@
     "compression": "^1.7.4"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "css-loader": "^6.8.1",
-    "style-loader": "^3.3.3",
-    "file-loader": "^6.2.0"
+    "nodemon": "^3.0.2"
   }
 } 
